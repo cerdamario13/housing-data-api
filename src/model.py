@@ -1,5 +1,6 @@
 import wrangles
 import pandas as pd
+from config import mongo_config
 
 def read_house_pi():
     """
@@ -10,13 +11,20 @@ def read_house_pi():
     - mongodb:
         user: ${MONGO_USER}
         password: ${MONGO_PASSWORD}
-        database: ${MONGO_DB}
+        database: ${MONGO_DB_NAME}
         collection: ${MONGO_COLLECTION}
         host: ${MONGO_HOST}
     """
 
     data = wrangles.recipe.run(
     recipe=recipe,
+    variables={
+        "MONGO_USER": mongo_config.mongo_user,
+        "MONGO_PASSWORD": mongo_config.mongo_password,
+        "MONGO_HOST": mongo_config.mongo_host,
+        "MONGO_DB_NAME": mongo_config.mongo_db_name,
+        "MONGO_COLLECTION": mongo_config.mongo_collection
+    }
     ).to_dict(orient='records')
 
     return data
