@@ -2,7 +2,20 @@ import wrangles
 import pandas as pd
 from config import mongo_config
 
-def read_house_pi():
+def _preprocess_data(data: dict) -> dict:
+    """
+    Preprocess data by converting years to list of dictionaries. Fluent UI Charts require data in this format
+    {
+        x: year,
+        y: value
+    }
+    """
+    new_years = [{'x': val[0], 'y': val[1]} for val in data['years'].items()]
+    data['years'] = new_years
+    return data
+
+
+def read_house_pi() -> list[dict]:
     """
     Read house price to income ratio data
     """
@@ -27,6 +40,8 @@ def read_house_pi():
         "MONGO_COLLECTION": mongo_config.mongo_collection
     }
     ).to_dict(orient='records')
+    
+    data = [_preprocess_data(x) for x in data]
 
     return data
 
