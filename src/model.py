@@ -14,6 +14,7 @@ def read_house_pi():
         database: ${MONGO_DB_NAME}
         collection: ${MONGO_COLLECTION}
         host: ${MONGO_HOST}
+        projection: {_id: 0}
     """
 
     data = wrangles.recipe.run(
