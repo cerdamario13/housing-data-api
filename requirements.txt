@@ -1,3 +1,4 @@
 wrangles
 flask
 pandas
+flask-cors

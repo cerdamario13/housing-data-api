@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import model
+from flask_cors import CORS
 
 # Init app
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/', methods=['GET'])
 def heartbeat():
@@ -26,4 +28,4 @@ def pi_ratio():
 
 
 if __name__ == '__main__':
-    app.run(ssl_context=('.vscode/cert.pem', '.vscode/key.pem'), debug=False, port=8000, host='0.0.0.0')
+    app.run(debug=False, port=8000, host='0.0.0.0')
