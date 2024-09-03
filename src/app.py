@@ -14,8 +14,11 @@ def pi_ratio():
     """
     Get the house-price-to-income ratio is a measure used to evaluate housing affordability
     """
+
+    location = request.args.get('location')
+
     try:
-        data = model.read_house_pi()
+        data = model.read_house_pi(location)
         return jsonify(data)
     except Exception as e:
         print(str(e))

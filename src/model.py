@@ -12,7 +12,7 @@ def _preprocess_data(data: dict) -> dict:
     return data
 
 
-def read_house_pi() -> list[dict]:
+def read_house_pi(location) -> list[dict]:
     """
     Read house price to income ratio data
     """
@@ -25,6 +25,7 @@ def read_house_pi() -> list[dict]:
         collection: ${MONGO_COLLECTION}
         host: ${MONGO_HOST}
         projection: {_id: 0}
+        query: {Metro Name: "${LOCATION}"}
     """
     try:
         data = wrangles.recipe.run(
@@ -34,7 +35,8 @@ def read_house_pi() -> list[dict]:
             "MONGO_PASSWORD": mongo_config.mongo_password,
             "MONGO_HOST": mongo_config.mongo_host,
             "MONGO_DB_NAME": mongo_config.mongo_db_name,
-            "MONGO_COLLECTION": mongo_config.mongo_collection
+            "MONGO_COLLECTION": mongo_config.mongo_collection,
+            "LOCATION": location,
         }
         ).to_dict(orient='records')
 
