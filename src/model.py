@@ -46,3 +46,17 @@ def read_house_pi(location) -> list[dict]:
     except:
         raise
 
+def read_house_pi_xl(location):
+    """
+    Read the data from local xl file
+    """
+    df = pd.read_excel('data/pi_ratio_data.xlsx')
+    mask = df['Metro Name'] == location
+    pi_data = df[mask]
+
+    if len(pi_data):
+        return pi_data.to_dict('records')
+    else:
+        return {"Error": "Query returned no data"}
+
+    print(df)

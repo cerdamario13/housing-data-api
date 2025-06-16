@@ -20,7 +20,7 @@ def pi_ratio():
     location = request.args.get('location')
 
     try:
-        data = model.read_house_pi(location)
+        data = model.read_house_pi_xl(location)
         return jsonify(data)
     except Exception as e:
         print(str(e))
