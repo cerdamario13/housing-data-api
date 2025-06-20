@@ -7,9 +7,8 @@ def _preprocess_data(data: dict) -> dict:
     Preprocess data by converting years to list of dictionaries. Fluent UI Charts require data in this format
         [ { x: year, y: value }, ... ]
     """
-    new_years = [{'x': val[0], 'y': val[1]} for val in data['years'].items()]
-    data['years'] = new_years
-    return data
+    year_data = [{'x': val[0], 'y': val[1]} for val in data.items()]
+    return year_data
 
 
 def read_house_pi(location) -> list[dict]:
@@ -55,7 +54,9 @@ def read_house_pi_xl(location):
     pi_data = df[mask]
 
     if len(pi_data):
-        return pi_data.to_dict('records')
+        data = pi_data.iloc[:, 2:].to_dict('records')[0]
+        return _preprocess_data(data)
+        
     else:
         return {"Error": "Query returned no data"}
 
