@@ -1,6 +1,7 @@
 import wrangles
 import pandas as pd
 from config import mongo_config
+from openpyxl import load_workbook
 
 def _preprocess_data(data: dict) -> dict:
     """
@@ -49,8 +50,22 @@ def read_house_pi_xl(location):
     """
     Read the data from local xl file
     """
-    df = pd.read_excel('data/pi_ratio_data.xlsx')
-    mask = df['Metro Name'] == location
+    file_path = 'data/Harvard_JCHS_State_Nations_Housing_2022.xlsx'
+    sheet_name = 'W-8'
+    cell_range = 'A5:AG387'
+    # Load workbook and sheet
+    wb = load_workbook(filename=file_path, data_only=True)
+    ws = wb[sheet_name]
+
+    # Extract cell values from range
+    data = ws[cell_range]
+    data_values = [[cell.value for cell in row] for row in data]
+
+    # Convert to DataFrame
+    headers = data_values[0]
+    rows = data_values[1:]
+    df = pd.DataFrame(rows, columns=headers)
+    mask = df['Metropolitan Area'] == location
     pi_data = df[mask]
 
     if len(pi_data):
