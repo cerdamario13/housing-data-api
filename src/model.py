@@ -72,4 +72,3 @@ def read_house_pi_xl(location):
     else:
         return {"Error": "Query returned no data"}
 
-    print(df)
