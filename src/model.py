@@ -1,7 +1,7 @@
 import wrangles
 import pandas as pd
 from config import mongo_config
-from globals import pi_ws, pi_cell_range
+from globals import pi_ws, pi_cell_range, metro_affordability_ws, metro_affordability_cell_range
 
 # Read the sheet data
 
@@ -71,4 +71,29 @@ def read_house_pi_xl(location):
         
     else:
         return {"Error": "Query returned no data"}
+    
+def read_home_affordability_2022(location):
+    """
+    Get Metro Area-Typical Home Value and Mortgage Affordability: April 2022
+    """
+
+    # Extract cell values from range
+    data = metro_affordability_ws[metro_affordability_cell_range]
+    data_values = [[cell.value for cell in row] for row in data]
+
+    # Convert to dataFrame
+    headers = data_values[0]
+    rows = data_values[1:]
+    df = pd.DataFrame(rows, columns=headers)
+    mask = df['Metropolitan Area'] == location
+    m_f_data = df[mask]
+
+    if len(m_f_data):
+        # Do not need the 1, 2, and 3 columns
+        data = m_f_data.iloc[:, 2:].to_dict('records')[0]
+        return _preprocess_data(data)
+    else:
+        return {"Error": "Query returned no data"}
+    
+
 
