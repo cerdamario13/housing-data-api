@@ -77,6 +77,10 @@ def read_home_affordability_2022(location):
     Get Metro Area-Typical Home Value and Mortgage Affordability: April 2022
     """
 
+    # clean up the name
+    if location == "Austin-Round Rock, TX":
+        location = "Austin-Round Rock-Georgetown, TX"
+
     # Extract cell values from range
     data = metro_affordability_ws[metro_affordability_cell_range]
     data_values = [[cell.value for cell in row] for row in data]
@@ -89,9 +93,8 @@ def read_home_affordability_2022(location):
     m_f_data = df[mask]
 
     if len(m_f_data):
-        # Do not need the 1, 2, and 3 columns
-        data = m_f_data.iloc[:, 2:].to_dict('records')[0]
-        return _preprocess_data(data)
+        data = m_f_data.to_dict('records')[0]
+        return data
     else:
         return {"Error": "Query returned no data"}
     
