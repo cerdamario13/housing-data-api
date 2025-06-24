@@ -25,6 +25,19 @@ def pi_ratio():
     except Exception as e:
         print(str(e))
         return jsonify({'message': 'Error occurred'}), 500
+    
+@app.route('/affordability', methods=['GET'])
+def affordability():
+    """
+    Get Metro Area-Typical Home Value and Mortgage Affordability: April 2022
+    """
+    location = request.args.get('location')
+    try:
+        data = model.read_home_affordability_2022(location)
+        return jsonify(data)
+    except Exception as e:
+        print(str(e))
+        return jsonify({'message': 'Error occurred'}), 500
 
 
 if __name__ == '__main__':
