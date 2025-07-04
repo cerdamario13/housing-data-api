@@ -1,7 +1,7 @@
 import wrangles
 import pandas as pd
 from config import mongo_config
-from globals import pi_ws, pi_cell_range, metro_affordability_ws, metro_affordability_cell_range
+from globals import *
 
 # Read the sheet data
 
@@ -98,5 +98,27 @@ def read_home_affordability_2022(location):
     else:
         return {"Error": "Query returned no data"}
     
+def year_to_year_change(location):
+    """
+    Get the year to year change for rent and home value
+    """
+    # clean up the name
+    if location == "Austin-Round Rock, TX":
+        location = "Austin-Round Rock-Georgetown, TX"
 
+    # Extract cell values from range
+    data = yoy_change_ws[yoy_change_cell_range]
+    data_values = [[cell.value for cell in row] for row in data]
+    
+    headers = data_values[0]
+    rows = data_values[1:]
+    df = pd.DataFrame(rows, columns=headers)
+    mask = df['Metropolitan Area'] == location
+    m_f_data = df[mask]
+
+    if len(m_f_data):
+        data = m_f_data.to_dict('records')[0]
+        return data
+    else:
+        return {"Error": "Query returned no data"}
 
