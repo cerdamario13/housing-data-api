@@ -16,5 +16,5 @@ metro_affordability_ws = pi_wb[metro_affordability_sheet_name]
 
 # Year over Year change in rent and home value
 yoy_change_sheet_name = 'W-10'
-yoy_change_cell_range = 'A4:O107'
+yoy_change_cell_range = 'A6:O107'
 yoy_change_ws = pi_wb[yoy_change_sheet_name]

@@ -102,9 +102,10 @@ def year_to_year_change(location):
     """
     Get the year to year change for rent and home value
     """
-    # clean up the name
-    if location == "Austin-Round Rock, TX":
-        location = "Austin-Round Rock-Georgetown, TX"
+
+    if location == 'Austin-Round Rock, TX':
+        location = "Austin, TX"
+
 
     # Extract cell values from range
     data = yoy_change_ws[yoy_change_cell_range]
