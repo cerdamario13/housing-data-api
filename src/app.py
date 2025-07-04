@@ -39,6 +39,18 @@ def affordability():
         print(str(e))
         return jsonify({'message': 'Error occurred'}), 500
 
+@app.route('/yty_change', methods=['GET'])
+def yty_change():
+    """
+    Get the Year to Year change for Rent and Home Value
+    """
+    location = request.args.get('location')
+    try:
+        data = model.year_to_year_change(location)
+        return jsonify(data)
+    except Exception as e:
+        print(str(e))
+        return jsonify({'message': 'Error occurred'})
 
 if __name__ == '__main__':
     app.run(debug=False, port=8000, host='0.0.0.0')
