@@ -114,11 +114,26 @@ def year_to_year_change(location):
     headers = data_values[0]
     rows = data_values[1:]
     df = pd.DataFrame(rows, columns=headers)
+    # reset the index
     mask = df['Metropolitan Area'] == location
     m_f_data = df[mask]
 
+    # Rent values
+    rent_keys = list(m_f_data.iloc[0].index)[1:8]
+    rent_values = list(m_f_data.iloc[0].values)[1:8]
+    rent_dict = [{k:float(v)} for (k,v) in zip(rent_keys, rent_values)]
+
+    # House Values
+    house_keys = list(m_f_data.iloc[0].index)[8:]
+    house_values = list(m_f_data.iloc[0].index)[8:]
+    house_dict = [{k:float(v)} for (k,v) in zip(house_keys, house_values)]
+
+    data = {
+        'rent_data': rent_dict,
+        'house_data': house_dict
+    }
+
     if len(m_f_data):
-        data = m_f_data.to_dict('records')[0]
         return data
     else:
         return {"Error": "Query returned no data"}
