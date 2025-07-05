@@ -125,7 +125,7 @@ def year_to_year_change(location):
 
     # House Values
     house_keys = list(m_f_data.iloc[0].index)[8:]
-    house_values = list(m_f_data.iloc[0].index)[8:]
+    house_values = list(m_f_data.iloc[0].values)[8:]
     house_dict = [{k:float(v)} for (k,v) in zip(house_keys, house_values)]
 
     data = {
