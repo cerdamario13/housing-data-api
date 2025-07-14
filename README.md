@@ -1,3 +1,7 @@
+# Housing Data API
+
+Repository of data from [JCHS](https://www.jchs.harvard.edu/data-search)
+
 
 ## Testing
 
