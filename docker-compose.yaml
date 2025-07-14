@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5001:8000"  # HostPort:ContainerPort
+    volumes:
+      - ./src:/app           # So code changes reflect during development
+      - ./data:/app/data     # Mounts your Excel files inside container
+    environment:
+      - FLASK_ENV=development
+
