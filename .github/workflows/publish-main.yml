@@ -11,7 +11,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: cerdamario13/${{ github.repository }}
+  IMAGE_NAME: housing-data-api
   IMAGE_TAG: latest
   
 
