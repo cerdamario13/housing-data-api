@@ -2,20 +2,16 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy requirements.txt from root context
-COPY ../requirements.txt .
-
-# Install Python dependencies
+# Copy and install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the Flask source code
-COPY . .
+# Copy only necessary source files (no __pycache__)
+COPY src ./src
+COPY data ./data
 
-# Copy the data directory from root (if needed inside container)
-COPY ../data ./data
-
-# Expose Flask port
+# Expose port if using Flask (adjust if not)
 EXPOSE 8000
 
 # Run the Flask app
-CMD ["python", "app.py"]
+CMD ["python", "src/app.py"]

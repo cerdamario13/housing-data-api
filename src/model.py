@@ -1,4 +1,3 @@
-import wrangles
 import pandas as pd
 from config import mongo_config
 from globals import *
@@ -13,41 +12,6 @@ def _preprocess_data(data: dict) -> dict:
     """
     year_data = [{'x': val[0], 'y': val[1]} for val in data.items()]
     return year_data
-
-
-def read_house_pi(location) -> list[dict]:
-    """
-    Read house price to income ratio data
-    """
-    recipe = """
-    read:
-    - mongodb:
-        user: ${MONGO_USER}
-        password: ${MONGO_PASSWORD}
-        database: ${MONGO_DB_NAME}
-        collection: ${MONGO_COLLECTION}
-        host: ${MONGO_HOST}
-        projection: {_id: 0}
-        query: {Metro Name: "${LOCATION}"}
-    """
-    try:
-        data = wrangles.recipe.run(
-        recipe=recipe,
-        variables={
-            "MONGO_USER": mongo_config.mongo_user,
-            "MONGO_PASSWORD": mongo_config.mongo_password,
-            "MONGO_HOST": mongo_config.mongo_host,
-            "MONGO_DB_NAME": mongo_config.mongo_db_name,
-            "MONGO_COLLECTION": mongo_config.mongo_collection,
-            "LOCATION": location,
-        }
-        ).to_dict(orient='records')
-
-        data = [_preprocess_data(x) for x in data]
-
-        return data
-    except:
-        raise
 
 def read_house_pi_xl(location):
     """
