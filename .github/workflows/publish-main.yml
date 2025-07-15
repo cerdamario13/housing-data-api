@@ -43,6 +43,9 @@ jobs:
       #     cd src
       #     pytest
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
        # Only log in and push if not a pull request
       - name: Log in to GitHub Container Registry
         if: github.event_name != 'pull_request'
@@ -60,12 +63,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push to GHCR and Docker Hub
+      - name: Build and push multi-platform image
         uses: docker/build-push-action@v5
         if: github.event_name != 'pull_request'
         with:
           context: .
           push: true
+          platforms: linux/amd64, linux/arm64
           tags: |
             ghcr.io/cerdamario13/${{ env.IMAGE_NAME }}:latest
             docker.io/cerdamario13/${{ env.IMAGE_NAME }}:latest
