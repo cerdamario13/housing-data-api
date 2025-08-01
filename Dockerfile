@@ -10,8 +10,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src ./src
 COPY data ./data
 
-# Expose port if using Flask (adjust if not)
+# Expose port
 EXPOSE 8000
 
-# Run the Flask app
-CMD ["python", "src/app.py"]
+# Start the app with Gunicorn
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "src.app:app"]
