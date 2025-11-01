@@ -1,5 +1,4 @@
 import pandas as pd
-from config import mongo_config
 from globals import *
 
 # Read the sheet data
