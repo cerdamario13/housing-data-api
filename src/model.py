@@ -3,7 +3,6 @@ from globals import *
 
 # Read the sheet data
 
-
 def _preprocess_data(data: dict) -> dict:
     """
     Preprocess data by converting years to list of dictionaries. Fluent UI Charts require data in this format
